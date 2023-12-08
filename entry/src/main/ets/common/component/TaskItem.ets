@@ -9,7 +9,7 @@ export struct TaskItem {
 
   build() {
     Row() {
-      Text(this.item.name)
+      Text(this.item.getName())
         .decoration({ type: this.item.finished ? TextDecorationType.LineThrough : TextDecorationType.None })
         .fontColor(this.item.finished ? '#b1b1b1' : '#000')
       Checkbox().select(this.item.finished).onChange((val) => {

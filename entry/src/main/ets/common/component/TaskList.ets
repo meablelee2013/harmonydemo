@@ -7,12 +7,14 @@ export struct TaskList {
   @Link totalTask: number
   @Link finishTask: number
   @Link tasks: Task[]
+  @State currentIndex: number = 1
 
   build() {
     Column({ space: 5 }) {
       Button('新增任务').width(150)
         .onClick(() => {
-          this.tasks.push(new Task())
+          this.tasks.push(new Task(this.currentIndex))
+          this.currentIndex++
           this.progressChange()
         })
 
@@ -20,14 +22,14 @@ export struct TaskList {
         ForEach(this.tasks, (item: Task, index: number) => {
           ListItem() {
             //方法一
-            // TaskItem({ item: item, onTaskChange: () => {
-            //   this.progressChange()
-            // } })
+            TaskItem({ item: item, onTaskChange: () => {
+              this.progressChange()
+            } })
             //上面的方法也可以
             //方法二
             //下面的这个也可以，为什么要调用bind(this),是因为在子组件的TaskItem里调用progressChange时，里面调用this时的
             //上下文变化了，所以需要把父组件的this传给子组件
-            TaskItem({ item: item, onTaskChange: this.progressChange.bind(this) })
+            // TaskItem({ item: item, onTaskChange: this.progressChange.bind(this) })
           }.swipeAction({
             end: this.DeleteButton(index)
           })

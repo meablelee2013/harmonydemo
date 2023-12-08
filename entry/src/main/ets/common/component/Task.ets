@@ -8,7 +8,15 @@
 
 @Observed
 export class Task {
-  static id: number = 1
-  name: string = `任务${Task.id++}`
+  id: number
+  private name: string
   finished: boolean = false
+
+  constructor(id: number) {
+    this.id = id
+  }
+
+  getName(): string {
+    return `任务 ${this.id}`
+  }
 }
